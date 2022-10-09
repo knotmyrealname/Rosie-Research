@@ -1,0 +1,67 @@
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...

@@ -1,0 +1,28 @@
+
+-- Matches transactions, handling nesting and crashing transactions
+
+import word, num
+
+local string = word.any
+local value = num.signed_number
+
+local trans_id = [:digit:]+
+local trans_begin = "BEGIN transaction" trans_id
+local trans_end = "END transaction" backref:trans_id
+
+local incomplete_trans_id = [:digit:]+
+local incomplete_trans_begin = "BEGIN transaction" incomplete_trans_id
+
+-- limitations: does not recognize tabs
+local data_line = { !>"\n" string / value }+ 
+local content = ( !("BEGIN" / "END") data_line )+
+
+
+grammar
+  complete_transaction = trans_begin (content)* (complete_transaction)* (content)* trans_end
+  incomplete_nested_transaction = incomplete_trans_begin (content)* (complete_transaction / incomplete_nested_transaction)* (content)*
+in
+  complete_nested_transaction = trans_begin (content)* (complete_nested_transaction / incomplete_nested_transaction)* (content)* trans_end
+  -- incomplete_transaction = trans_begin (content)* (incomplete_transaction)* (content)* (trans_end)?
+  -- transaction = complete_transaction / incomplete_transaction
+end 

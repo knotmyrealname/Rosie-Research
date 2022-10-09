@@ -1,0 +1,501 @@
+login as: user1
+user1@192.168.1.69's password:
+Linux Server001 5.18.0-1-amd64 #1 SMP PREEMPT_DYNAMIC Debian 5.18.2-1 (2022-06-0                                                                                                                                                             6) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Sep 29 21:17:49 2022 from 192.168.1.67
+user1@Server001:~$ cd rosie/rosie/
+user1@Server001:~/rosie/rosie$ ls
+build  build.log  CHANGELOG  CONTRIBUTORS  DCO1.1.txt  doc  extra  LICENSE  Makefile  README  README.md  rosie  rpl  src  submodules  test  VERSION
+user1@Server001:~/rosie/rosie$ cd rpl/daniel/
+user1@Server001:~/rosie/rosie/rpl/daniel$ ls
+daniel-2022-09-23.txt  transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl -w match complete_transaction daniel-2022-09-23.txt
+Usage: rosie [--verbose] [--rpl <rpl>] [-f <file>] [--norcfile]
+       [--rcfile <rcfile>] [--libpath <libpath>] [--colors <colors>]
+       [--help] [<command>] ...
+
+Error: unknown option '-w'
+Did you mean '-f'?
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl match -w complete_transaction daniel-2022-09-23.txt
+Error loading transactions.rpl:
+Compile error
+        [compiler]: exactly one rule allowed in public section of grammar
+        in transactions.rpl:17:1: grammar
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl match -w complete_transaction daniel-2022-09-23.txt
+Error loading transactions.rpl:
+Compile error
+        [compiler]: exactly one rule allowed in public section of grammar
+        in transactions.rpl:17:1: grammar
+user1@Server001:~/rosie/rosie/rpl/daniel$
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl match -w complete_transaction daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl grep -w complete_transaction daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl grep -w complete_transaction daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl grep -w complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+Error loading transactions.rpl:
+Compile error
+        [compiler]: pattern being repeated can match the empty string
+        in transactions.rpl:15:17: local content = ( !("BEGIN" / "END") data )+
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano daniel-2022-09-23.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ../../rosie --colors "complete_transaction=red" -f transactions.rpl grep -w -o color complete_transaction daniel-2022-09-23.txt
+
+
+Log file with lines like the ones below.  For now, let's consider nested but not
+interleaved log lines.
+
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+
+
+TASK: RPL pattern that matches an entire transaction or an incomplete
+transaction, and we know the difference:
+
+tx = complete_transaction / incomplete_transaction
+
+complete_transaction = ...
+incomplete_transaction = ...
+
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ ^C
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano /home/user1/.bash_history
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano test.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano test.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano test.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ **/.bash_history
+-bash: **/.bash_history: No such file or directory                                                                                                                                                                           ^C
+user1@Server001:~/rosie/rosie/rpl/daniel$
+user1@Server001:~/rosie/rosie/rpl/daniel$
+user1@Server001:~/rosie/rosie/rpl/daniel$
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano test.txt
+user1@Server001:~/rosie/rosie/rpl/daniel$ ls
+daniel-2022-09-23.txt  transactions.rpl
+user1@Server001:~/rosie/rosie/rpl/daniel$ nano 9/30-output.txt
