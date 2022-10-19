@@ -1,0 +1,49 @@
+With the current rpl file, we can define multiple patterns. We can add new patterns to the file
+to demonstrate different kinds of things:
+
+(Demo 1)
+ - define a pattern that matches a line
+  - a line is one of a different types:
+   - BEGIN
+   - END
+   - 'data'
+ - Once we have a line, we have a pattern that matches every line in the file
+  - There is a find all macro 
+   - findall: line
+  - Define one color for BEGIN, one color for END, and one color for 'data'
+ #Note We are not actually matching transactions, just pieces of them
+
+(Demo 2)
+ - We could define a pattern that starts at a BEGIN, contains data, and ends at an END
+  - call this pattern a 'simple_tx'
+   - Will match the transaction number (trans_id)
+ - Define a color for this pattern and demostrate that
+ #Note Unsupported are Nested, Interleaved, and Partial Transactions
+
+(Demo 3)
+ - RPL allows for recursive patterns, unlike regex
+  - define a pattern like 'nested_tx' for transactions that are nested
+   - - Will match the transaction number (trans_id)
+ - Define a color for this pattern and demo
+ ~ Does Rosie allow give us a way to color the inner transactions differently from the outer ones?
+ #Note Unsupported are Interleaved and Partial Transactions
+
+(Demo 4)
+ - Can we write a pattern that matches complete nested transactions (Demo 3) but also matches 
+   individual lines that are not part of a nested transaction
+  - Case: Interleaved Transaction
+   - We want to keep matching valid lines, even if they are invalid/extraneous
+    - Marked as something like 'invalid_line'
+   - Ex: BEGIN 1
+         foo 12
+         BEGIN 2
+         END 1
+         foo 43
+         END 2
+   - Two approaches
+    - Use RPL as is, matching from BEGIN to END, marking any extraneous lines as invalid and reparsing
+    - Add data structures such as a HashedMap to RPL to store transaction ids
+   ~ Do people want to do all of this in Pattern Matching? 
+
+Task: Write a script to test all Demos to output to their individual output files
+
