@@ -1,0 +1,30 @@
+-- Matches a nested transaction with no support for interleaved or partial transactions
+-- Command:
+-- rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green:invalid_line=yellow" -f demo_4.rpl grep -w -o color nested_tx input-1.txt
+
+import word, num
+
+
+local any = ( [:alpha:] / [:digit:] / [:punct:] )+
+  -- A term is any valid word
+local term = word.any
+  -- A value is any valid signed number (float or int)
+local value = num.signed_number
+  -- A transaction id can only be an unsigned integer
+local tx_id = num.uint
+
+  -- A transaction begins with the phrase "BEGIN transaction", followed by a transaction id
+tx_begin_line = "BEGIN transaction" tx_id
+  -- A data line cannnot begin with a "BEGIN" or "END", and must not have any newline characters. It must also
+  -- have at least one term or value. Otherwise, there are no limits to what a data line can have.
+data_line = !("BEGIN" / "END") { !>"\n" term / value }+ 
+  -- A transaction ends with the phrase "END transaction", followed by a transaction id
+tx_end_line = "END transaction" backref:tx_id
+  -- An invalid line is any line that cannot be normally matched
+invalid_line = { !>"\n" term / value }+
+
+grammar
+  nested_tx = tx_begin_line (data_line)+ (nested_tx)* (data_line)* tx_end_line /
+              { tx_begin_line (data_line)* (nested_tx)* (data_line)+ tx_end_line } /
+              invalid_line 
+end
