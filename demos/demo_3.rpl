@@ -1,6 +1,6 @@
 -- Matches a nested transaction with no support for interleaved or partial transactions
 -- Command:
--- rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo_3.rpl grep -w -o color nested_tx input-1.txt
+-- rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo_3.rpl grep -w -o color tx input-1.txt
 
 import word, num
 
@@ -26,3 +26,5 @@ grammar
   nested_tx = ( tx_begin_line (data_line)+ (nested_tx)* (data_line)* tx_end_line ) /
               ( tx_begin_line (data_line)* (nested_tx)* (data_line)+ tx_end_line )
 end
+
+tx = nested_tx

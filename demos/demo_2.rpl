@@ -1,6 +1,6 @@
 -- Matches a simple transaction with no support for nested, interleaved, or partial transactions
 -- Command:
--- rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo_2.rpl grep -w -o color simple_tx input-1.txt
+-- rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo_2.rpl grep -w -o color tx input-1.txt
 
 import word, num
 
@@ -22,3 +22,5 @@ tx_end_line = "END transaction" backref:tx_id
 
   -- A simple transactions consists of a beginning line, some data lines, and an ending line.
 simple_tx = tx_begin_line (data_line)+ tx_end_line
+
+tx = simple_tx
