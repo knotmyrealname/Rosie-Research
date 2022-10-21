@@ -15,7 +15,9 @@ local tx_id = num.uint
 tx_begin_line = "BEGIN transaction" tx_id
   -- A data line cannnot begin with a "BEGIN" or "END", and must not have any newline characters. It must also
   -- have at least one term or value. Otherwise, there are no limits to what a data line can have.
-data_line = !("BEGIN" / "END") { !>"\n" term / value }+ 
+-- data_line = !("BEGIN" / "END") { !>"\n" term / value }+ 
+data_line = { <"\n" !("BEGIN" / "END") { !>"\n" [ ]* {term / value} }+ }
+
   -- A transaction ends with the phrase "END transaction", followed by a transaction id
 tx_end_line = "END transaction" backref:tx_id
 

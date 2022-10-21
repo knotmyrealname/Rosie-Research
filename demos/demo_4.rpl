@@ -20,14 +20,15 @@ local incomplete_tx_id = num.uint
 tx_begin_line = "BEGIN transaction" tx_id
   -- A data line cannnot begin with a "BEGIN" or "END", and must not have any newline characters. It must also
   -- have at least one term or value. Otherwise, there are no limits to what a data line can have.
-data_line = !("BEGIN" / "END") { !>"\n" term / value }+ 
+-- data_line = !("BEGIN" / "END") { !>"\n" term / value }+ 
+data_line = { <"\n" !("BEGIN" / "END") { !>"\n" [ ]* {term / value} }+ }
   -- A transaction ends with the phrase "END transaction", followed by a transaction id
 tx_end_line = "END transaction" backref:tx_id
   -- An incomplete transaction starts the same way as a complete transaction, just that the id will not be
   -- matched again
 incomplete_tx_begin_line = "BEGIN transaction" incomplete_tx_id
   -- An invalid line is any line that cannot be normally matched
-invalid_line = <"\n" ( !"\n" any )+
+invalid_line = { !"\n" [ ]* any }+
 
 grammar
   complete_tx =  tx_begin_line (data_line)* (complete_tx)* (data_line)* tx_end_line
@@ -35,3 +36,5 @@ grammar
 in
   nested_tx = ( tx_begin_line (data_line)* (nested_tx / incomplete_tx)* (data_line)* tx_end_line )
 end
+
+tx = nested_tx / invalid_line

@@ -1,0 +1,264 @@
+Case 1: Nesting, but no interleaving
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo[0m [32m2[0m
+[32mbar[0m [32m44[0m [32mx[0m [32my[0m
+[34mEND transaction 7812378112387[0m
+[31mBEGIN transaction 111781237811[0m
+[32mfoo[0m [32m88[0m
+[31mBEGIN transaction 55[0m
+[32mbar[0m [32m33[0m [32my[0m [32my[0m
+[32mfoo[0m [32m55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo[0m [32m2[0m
+[32mbar[0m [32m44[0m [32mx[0m [32my[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo[0m [32m2[0m
+[32mbar[0m [32m44[0m [32mx[0m [32my[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+[31mBEGIN transaction 55[0m
+[32mbar[0m [32m33[0m [32my[0m [32my[0m
+[32mfoo[0m [32m55[0m
+[34mEND transaction 55[0m
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo[0m [32m2[0m
+[32mbar[0m [32m44[0m [32mx[0m [32my[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+Case 4: Missing "BEGIN" (invalid)
+
+foo 2
+bar 44 x y
+END transaction 7812378112387
+[31mBEGIN transaction 111781237811[0m
+[32mfoo[0m [32m88[0m
+[31mBEGIN transaction 55[0m
+[32mbar[0m [32m33[0m [32my[0m [32my[0m
+[32mfoo[0m [32m55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+Case 1: Nesting, but no interleaving
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+[31mBEGIN transaction 111781237811[0m
+[32mfoo 88[0m
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+Case 4: Missing "BEGIN" (invalid)
+
+foo 2
+bar 44 x y
+END transaction 7812378112387
+[31mBEGIN transaction 111781237811[0m
+[32mfoo 88[0m
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+Case 1: Nesting, but no interleaving
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+[31mBEGIN transaction 111781237811[0m
+[32mfoo 88[0m
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+Case 4: Missing "BEGIN" (invalid)
+
+foo 2
+bar 44 x y
+END transaction 7812378112387
+[31mBEGIN transaction 111781237811[0m
+[32mfoo 88[0m
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+Case 1: Nesting, but no interleaving
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+[31mBEGIN transaction 111781237811[0m
+[32mfoo 88[0m
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
+
+Case 2: Transactions can also be interleaved with one another.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 111781237811
+foo 88
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+
+[31mBEGIN transaction 7812378112387[0m
+[32mfoo 2[0m
+[32mbar 44 x y[0m
+[34mEND transaction 7812378112387[0m
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+Case 4: Missing "BEGIN" (invalid)
+
+foo 2
+bar 44 x y
+END transaction 7812378112387
+[31mBEGIN transaction 111781237811[0m
+[32mfoo 88[0m
+[31mBEGIN transaction 55[0m
+[32mbar 33 y y[0m
+[32mfoo 55[0m
+[34mEND transaction 55[0m
+[34mEND transaction 111781237811[0m
+
