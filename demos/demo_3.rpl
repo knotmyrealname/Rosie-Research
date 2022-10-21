@@ -21,6 +21,6 @@ tx_end_line = "END transaction" backref:tx_id
 
 
 grammar
-  nested_tx = tx_begin_line (data_line)+ (nested_tx)* (data_line)* tx_end_line /
-              tx_begin_line (data_line)* (nested_tx)* (data_line)+ tx_end_line
+  nested_tx = ( tx_begin_line (data_line)+ (nested_tx)* (data_line)* tx_end_line ) /
+              ( tx_begin_line (data_line)* (nested_tx)* (data_line)+ tx_end_line )
 end
