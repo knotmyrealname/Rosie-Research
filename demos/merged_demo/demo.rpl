@@ -68,12 +68,11 @@ invalid_line = { !"\n" [ ]* any }+
 grammar
     -- A complete transaction must have a begin, some data, and an end. It can have another
     -- complete or incomplete nested inside.
-  complete_tx = ( tx_begin_line (data_line)+ (complete_tx / incomplete_tx / data_line)* (data_line)* tx_end_line ) /
-                ( tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)+ tx_end_line )
+  complete_tx = ( tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)* tx_end_line )
     -- An incomplete transaction must have a begin, maybe some data, but not an end. It can have another complete
     -- or incomplete transaction nested inside.
   incomplete_tx = incomplete_tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)*
 in
     -- A nested transaction can be either a complete or incomplete transaction
-  nested_all_tx = (complete_tx / incomplete_tx) / invalid_line
+  nested_all_tx = complete_tx / incomplete_tx / invalid_line
 end

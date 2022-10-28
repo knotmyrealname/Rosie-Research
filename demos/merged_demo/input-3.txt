@@ -1,0 +1,132 @@
+Case 1: Nesting, but no interleaving
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+Case 1a: Deeply nested transactions with no interleaving or invalid entries
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+BEGIN transaction 1213
+foo 392
+bar 20 w f
+BEGIN transaction 15321
+foo 54
+bar 12 f f 
+BEGIN transaction 132145
+foo 95
+BEGIN transaction 5531
+bar 23 g s
+END transaction 5531
+bar 68 o s
+foo 75
+END transaction 132145
+END transaction 15321
+bar 90 p a
+BEGIN transaction 12521
+bar 23 g s
+END transaction 12521
+END transaction 1213
+foo 55
+END transaction 55
+END transaction 111781237811
+
+Case 2: Transactions can also be interleaved with one another.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 111781237811
+END transaction 55
+
+
+Case 3: It's also possible that a server crashes before finishing a transaction.
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 55
+foo 88
+BEGIN transaction 111781237811
+bar 33 y y
+foo 55
+END transaction 55
+
+Case 4: Missing "BEGIN" (invalid)
+
+foo 2
+bar 44 x y
+END transaction 7812378112387
+BEGIN transaction 111781237811
+foo 88
+BEGIN transaction 55
+bar 33 y y
+foo 55
+END transaction 55
+END transaction 111781237811
+
+Case 5: Deeply nested with invalid, valid, and incomplete transactions
+
+BEGIN transaction 7812378112387
+foo 2
+bar 44 x y
+BEGIN transaction 55
+bar 33 y y
+BEGIN transaction 1213
+foo 392
+bar 20 w f
+BEGIN transaction 15321
+foo 54
+bar 12 f f
+BEGIN transaction 132145
+foo 95
+BEGIN transaction 5531
+bar 23 g s
+END transaction 5531
+bar 68 o s
+foo 75
+BEGIN transaction 8141
+BEGIN transaction 5190
+bar 90 p a
+END transaction 8141
+END transaction 1213
+foo 55
+BEGIN transaction 4151
+END transaction 7812378112387
+bar 12 a b
+END transaction 55
+foo 32
+END transaction 5190
