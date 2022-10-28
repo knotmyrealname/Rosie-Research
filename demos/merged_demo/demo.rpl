@@ -1,0 +1,79 @@
+---- Matches Transactions, starting off with more simple matching
+---- Commands:
+----  LINE: rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo.rpl grep -w -o color line input-1.txt
+----  SIMPLE_TX: rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo.rpl grep -w -o color simple_tx input-1.txt
+----  NESTED_TX: rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green" -f demo.rpl grep -w -o color nested_tx input-1.txt
+----  NESTED_ANY_TX: rosie --colors "tx_begin_line=red:tx_end_line=blue:data_line=green:invalid_line=yellow:incomplete_tx_begin_line=cyan" -f demo.rpl grep -w -o color nested_all_tx input-1.txt
+
+import word, num
+
+  -- A term is any valid word
+local term = word.any
+  -- A value is any valid signed number (float or int)
+local value = num.unsigned_number
+  -- A transaction id can only be an unsigned integer
+local tx_id = num.uint
+
+  -- A transaction begins with the phrase "BEGIN transaction", followed by a transaction id
+tx_begin_line = "BEGIN transaction" tx_id
+  -- A data line cannnot begin with a "BEGIN" or "END", and must not have any newline 
+  -- characters. It must also have at least one term or value. Otherwise, there are no limits 
+  -- to what a data line can have.
+data_line = { <"\n" !("BEGIN" / "END") { !>"\n" [ ]* {term / value} }+ }
+  -- A transaction ends with the phrase "END transaction", followed by a transaction id
+end_line = "END transaction" tx_id
+
+-------------------------------------------------------------------------------------------------------
+-- DEMO 1 : Matches Parts of a Transaction: Standard Pattern Matching
+-------------------------------------------------------------------------------------------------------
+  -- A valid line can be the beginning of a transaction, a data line, or the end of a transaction
+line = tx_begin_line / end_line / data_line
+
+-------------------------------------------------------------------------------------------------------
+-- DEMO 2 : Matches Entire Transactions, No Nesting, Invalid, or Interleaved Transactions
+-------------------------------------------------------------------------------------------------------
+
+tx_end_line = "END transaction" backref:tx_id
+
+  -- A simple transactions consists of a beginning line, some data lines, and an ending line.
+simple_tx = tx_begin_line (data_line)+ tx_end_line
+
+-------------------------------------------------------------------------------------------------------
+-- DEMO 3 : Matches Nested Tranactions, No Invalid or Interleaved Transactions
+-------------------------------------------------------------------------------------------------------
+
+  -- Matches nested transactions using grammar recursion
+grammar
+     -- A nested transaction can have an infinite number of inner transactions, but each 
+     -- transactionmust have a data line
+  nested_tx = ( tx_begin_line (data_line)+ (nested_tx / data_line)* (data_line)* tx_end_line ) /
+              ( tx_begin_line (data_line)* (nested_tx / data_line)* (data_line)+ tx_end_line )
+end
+
+-------------------------------------------------------------------------------------------------------
+-- DEMO 4 : Matches Nested Transactions, Marking Invalid and Interleaved Transactions (for reparsing?)
+-------------------------------------------------------------------------------------------------------
+
+  -- Any alphanumeric phrase with punctuation, can be expanded
+local any = { [:alpha:] / [:digit:] / [:punct:] }+
+  -- A placeholder id for incomplete transactions, to avoid backref conflicts
+local incomplete_tx_id = num.uint
+  -- An incomplete transaction starts the same way as a complete transaction, just that the id
+  -- will not be matched again
+incomplete_tx_begin_line = "BEGIN transaction" incomplete_tx_id
+  -- An invalid line is any line that cannot be normally matched
+invalid_line = { !"\n" [ ]* any }+
+
+  -- Matches nested complete and incomplete transactions using recursion
+grammar
+    -- A complete transaction must have a begin, some data, and an end. It can have another
+    -- complete or incomplete nested inside.
+  complete_tx = ( tx_begin_line (data_line)+ (complete_tx / incomplete_tx / data_line)* (data_line)* tx_end_line ) /
+                ( tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)+ tx_end_line )
+    -- An incomplete transaction must have a begin, maybe some data, but not an end. It can have another complete
+    -- or incomplete transaction nested inside.
+  incomplete_tx = incomplete_tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)*
+in
+    -- A nested transaction can be either a complete or incomplete transaction
+  nested_all_tx = (complete_tx / incomplete_tx) / invalid_line
+end

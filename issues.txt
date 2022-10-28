@@ -1,0 +1,9 @@
+Noticed Issues in rosie:
+ - Unable to color inner grammar variables in output
+ - Unable to use declared grammars in other grammars
+ - Parnentheses and bracket usage can be confusing for a new user
+ - Managing whitespace can be confusing
+ - Recursion is only possible in a grammar declaration
+Possible Issues in rosie:
+ - Unable to do more complicated matchings efficiently (eg long interleaved tranactions)
+   - Might be fixable if we have data structures (should we even do this? might be out of scope)

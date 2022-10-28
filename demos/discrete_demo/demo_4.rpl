@@ -4,7 +4,7 @@
 
 import word, num
 
-
+  -- Any alphanumeric word with punctuation, can be expanded
 local any = { [:alpha:] / [:digit:] / [:punct:] }+
   -- A term is any valid word
 local term = word.any
@@ -28,13 +28,20 @@ tx_end_line = "END transaction" backref:tx_id
   -- matched again
 incomplete_tx_begin_line = "BEGIN transaction" incomplete_tx_id
   -- An invalid line is any line that cannot be normally matched
-invalid_line = { !"\n" [ ]* any }+
+invalid_line = { !"\n" [ ]* any }+ 
 
+  -- Matches nested complete and incomplete transactions using recursion
 grammar
-  complete_tx =  tx_begin_line (data_line)* (complete_tx)* (data_line)* tx_end_line
-  incomplete_tx =  incomplete_tx_begin_line (data_line)* (complete_tx / incomplete_tx)* (data_line)*
+    -- A complete transaction must have a begin, some data, and an end. It can have another complete or 
+    -- incomplete nested inside.
+  complete_tx = ( tx_begin_line (data_line)+ (complete_tx / incomplete_tx)* (data_line)* tx_end_line ) / 
+                ( tx_begin_line (data_line)* (complete_tx / incomplete_tx)* (data_line)+ tx_end_line )  
+    -- An incomplete transaction must have a begin, maybe some data, but not an end. It can have another complete or
+    -- incomplete transaction nested inside.
+  incomplete_tx = incomplete_tx_begin_line (data_line)* (complete_tx / incomplete_tx)* (data_line)*
 in
-  nested_tx = ( tx_begin_line (data_line)* (nested_tx / incomplete_tx)* (data_line)* tx_end_line )
+    -- A nested transaction can be either a complete or incomplete transaction
+  nested_tx = complete_tx / incomplete_tx
 end
 
 tx = nested_tx / invalid_line

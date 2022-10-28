@@ -15,14 +15,13 @@ local tx_id = num.uint
 tx_begin_line = "BEGIN transaction" tx_id
   -- A data line cannnot begin with a "BEGIN" or "END", and must not have any newline characters. It must also
   -- have at least one term or value. Otherwise, there are no limits to what a data line can have.
--- data_line = !("BEGIN" / "END") { !>"\n" term / value }+ 
 data_line = { <"\n" !("BEGIN" / "END") { !>"\n" [ ]* {term / value} }+ }
-
   -- A transaction ends with the phrase "END transaction", followed by a transaction id
 tx_end_line = "END transaction" backref:tx_id
 
-
+ -- Matches nested transactions using grammar recursion
 grammar
+    -- A nested transaction can have an infinite number of inner transactions, but each transaction must have a data line
   nested_tx = ( tx_begin_line (data_line)+ (nested_tx)* (data_line)* tx_end_line ) /
               ( tx_begin_line (data_line)* (nested_tx)* (data_line)+ tx_end_line )
 end
