@@ -8,53 +8,57 @@ echo "Generating Demo Files..."
 echo "Text file (t), Standard Output (s), JSON (j), or Clean (c):" 
 read output_format
 
+echo "Input file (if Clean, just press {Enter}:"
+read input_file
+
 function demorosie (){
   rosie -f demo.rpl grep -w -o $1 $2 $input_file
 }
 
+function space_output () {
+  echo "Hit {Enter} to continue"
+  read entry
+}
+
+declare -a demostatus=('Running Demo 1... (A pattern that matches lines)'
+                       'Running Demo 2... (A pattern that matches simple transactions)'
+                       'Running Demo 3... (A pattern that matches nested transactions)'
+                       'Running Demo 4... (A pattern that matches nested, incomplete, and invalid transactions)')
+
 if [[ $output_format == "t" || $output_format == "T" ]]
 then
-  echo "Input file:"
-  read input_file
-  echo "Running Demo 1... (A pattern that matches lines)"
+  echo ${demostatus[0]}
   demorosie color line >> output_1.txt
-  echo "Running Demo 2... (A pattern that matches simple transactions)"
+  echo ${demostatus[1]}
   demorosie color simple_tx >> output_2.txt
-  echo "Running Demo 3... (A pattern that matches nested transactions)"
+  echo ${demostatus[2]}
   demorosie color nested_tx >> output_3.txt
-  echo "Running Demo 4... (A pattern that matches nested, incomplete, and invalid transactions)"
+  echo ${demostatus[3]}
   demorosie color nested_all_tx >> output_4.txt
 
 elif [[ $output_format == "s" || $output_format == "S" ]]
 then
-  echo "Input file:"
-  read input_file
-  echo "Running Demo 1... (A pattern that matches lines)"
+  echo ${demostatus[0]}
   demorosie color line
-  echo "Hit {Enter} to continue"
-  read entry
-  echo "Running Demo 2... (A pattern that matches simple transactions)"
+  space_output
+  echo ${demostatus[1]}
   demorosie color simple_tx
-  echo "Hit {Enter} to continue"
-  read entry
-  echo "Running Demo 3... (A pattern that matches nested transactions)"
+  space_output
+  echo ${demostatus[2]}
   demorosie color nested_tx
-  echo "Hit {Enter} to continue"
-  read entry
-  echo "Running Demo 4... (A pattern that matches nested, incomplete, and invalid transactions)"
+  space_output
+  echo ${demostatus[3]}
   demorosie color nested_all_tx
 
 elif [[ $output_format == "j" || $output_format == "J" ]]
 then
-  echo "Input file:"
-  read input_file
-  echo "Running Demo 1... (A pattern that matches lines)"
+  echo ${demostatus[0]}
   demorosie jsonpp line >> json_1.txt
-  echo "Running Demo 2... (A pattern that matches simple transactions)"
+  echo ${demostatus[1]}
   demorosie jsonpp simple_tx >> json_2.txt
-  echo "Running Demo 3... (A pattern that matches nested transactions)"
+  echo ${demostatus[2]}
   demorosie jsonpp nested_tx >> json_3.txt
-  echo "Running Demo 4... (A pattern that matches nested, incomplete, and invalid transactions)"
+  echo ${demostatus[3]}
   demorosie jsonpp nested_all_tx >> json_4.txt
 
 elif [[ $output_format == "c" || $output_format == "C" ]]
