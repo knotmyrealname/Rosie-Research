@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# For Color Coding to work correctly, the included .rosierc file must be in the home directory
 set -o errexit
 set -o nounset
 set -o pipefail
@@ -11,8 +12,10 @@ read output_format
 echo "Input file (if Clean, just press {Enter}:"
 read input_file
 
+colors="end_line=blue:tx_begin_line=red:tx_end_line=blue:data_line=green:invalid_line=yellow:incomplete_tx_begin_line=cyan"
+
 function demorosie (){
-  rosie -f demo.rpl grep -w -o $1 $2 $input_file
+  rosie --colors $colors -f demo.rpl grep -w -o $1 $2 $input_file
 }
 
 function space_output () {

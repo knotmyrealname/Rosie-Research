@@ -1,0 +1,16 @@
+{"e": 472, 
+  "data": "BEGIN transaction 4151\n", 
+  "subs": 
+    [{"e": 471, 
+      "data": "BEGIN transaction 4151", 
+      "subs": 
+        [{"e": 471, 
+          "data": "4151", 
+          "type": "incomplete_tx_id", 
+          "s": 467}], 
+      "type": "incomplete_tx_begin_line", 
+      "s": 449}], 
+    "type": "nested_all_tx.incomplete_tx", 
+    "s": 449}], 
+  "type": "nested_all_tx.incomplete_tx", 
+"s": 122}

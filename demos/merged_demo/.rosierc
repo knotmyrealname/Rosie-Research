@@ -1,0 +1,1 @@
+colors = "end_line=blue:tx_begin_line=red:tx_end_line=blue:data_line=green:invalid_line=yellow:incomplete_tx_begin_line=cyan"
