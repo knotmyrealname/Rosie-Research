@@ -10,7 +10,5 @@
           "s": 467}], 
       "type": "incomplete_tx_begin_line", 
       "s": 449}], 
-    "type": "nested_all_tx.incomplete_tx", 
-    "s": 449}], 
   "type": "nested_all_tx.incomplete_tx", 
-"s": 122}
+  "s": 449} 

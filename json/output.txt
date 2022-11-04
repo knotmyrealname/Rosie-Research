@@ -578,3 +578,2099 @@
      "s": 539}], 
  "type": "*", 
  "s": 1}
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line |[36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line |[36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line |[36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line |[36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line |[36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line |[36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line |[36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line |[36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line |[36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line |[36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line |[36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line |[36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line |[36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line |[36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line |[36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line |[36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line |[36mEND transaction 5531[0m
+              (325, 335) data_line |[36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line |[36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line |[36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line |[36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line |[36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line |[36mEND transaction 8141[0m
+          (421, 441) tx_end_line |[36mEND transaction 1213[0m
+        (442, 448) data_line |[36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line |[36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line |[36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line |[36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line |[36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line |[36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line |[36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line[36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line[36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line[36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line[36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line[36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line[36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line[36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line[36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line[36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line[36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line[36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line[36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line[36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line[36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line[36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line[36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line[36mEND transaction 5531[0m
+              (325, 335) data_line[36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line[36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line[36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line[36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line[36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line[36mEND transaction 8141[0m
+          (421, 441) tx_end_line[36mEND transaction 1213[0m
+        (442, 448) data_line[36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line[36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line[36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line[36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line[36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line[36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line[36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+
+
+ [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+
+
+
+
+
+
+
+
+
+
+
+
+ [36mBEGIN transaction 7812378112387[0m
+
+ [36mfoo 2[0m
+
+
+
+ [36mbar 44 x y[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 55[0m
+
+ [36mbar 33 y y[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 1213[0m
+
+ [36mfoo 392[0m
+
+
+
+ [36mbar 20 w f[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 15321[0m
+
+ [36mfoo 54[0m
+
+
+
+ [36mbar 12 f f[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 132145[0m
+
+ [36mfoo 95[0m
+
+
+
+
+ [36mBEGIN transaction 5531[0m
+
+ [36mbar 23 g s[0m
+
+
+
+
+
+ [36mEND transaction 5531[0m
+ [36mbar 68 o s[0m
+
+
+
+
+
+ [36mfoo 75[0m
+
+
+
+
+ [36mBEGIN transaction 8141[0m
+
+
+ [36mBEGIN transaction 5190[0m
+
+ [36mbar 90 p a[0m
+
+
+
+
+
+ [36mEND transaction 8141[0m
+ [36mEND transaction 1213[0m
+ [36mfoo 55[0m
+
+
+
+
+ [36mBEGIN transaction 4151[0m
+
+ [36mEND transaction 7812378112387[0m
+
+ [36mbar 12 a b[0m
+
+
+
+
+
+ [36mEND transaction 55[0m
+
+
+
+
+ [36mfoo 32[0m
+
+
+
+ [36mEND transaction 5190[0m
+
+
+
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+
+
+ [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+
+
+
+
+
+
+
+
+
+
+
+
+ [36mBEGIN transaction 7812378112387[0m
+
+ [36mfoo 2[0m
+
+
+
+ [36mbar 44 x y[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 55[0m
+
+ [36mbar 33 y y[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 1213[0m
+
+ [36mfoo 392[0m
+
+
+
+ [36mbar 20 w f[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 15321[0m
+
+ [36mfoo 54[0m
+
+
+
+ [36mbar 12 f f[0m
+
+
+
+
+
+
+ [36mBEGIN transaction 132145[0m
+
+ [36mfoo 95[0m
+
+
+
+
+ [36mBEGIN transaction 5531[0m
+
+ [36mbar 23 g s[0m
+
+
+
+
+
+ [36mEND transaction 5531[0m
+ [36mbar 68 o s[0m
+
+
+
+
+
+ [36mfoo 75[0m
+
+
+
+
+ [36mBEGIN transaction 8141[0m
+
+
+ [36mBEGIN transaction 5190[0m
+
+ [36mbar 90 p a[0m
+
+
+
+
+
+ [36mEND transaction 8141[0m
+ [36mEND transaction 1213[0m
+ [36mfoo 55[0m
+
+
+
+
+ [36mBEGIN transaction 4151[0m
+
+ [36mEND transaction 7812378112387[0m
+
+ [36mbar 12 a b[0m
+
+
+
+
+
+ [36mEND transaction 55[0m
+
+
+
+
+ [36mfoo 32[0m
+
+
+
+ [36mEND transaction 5190[0m
+
+
+
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
+(1, 559) *
+  (1, 71) nested_all_tx
+    (1, 71) invalid_line [36mCase 5: Deeply nested with invalid, valid, and incomplete transactions[0m
+      (1, 5) any
+      (6, 8) any
+      (9, 15) any
+      (16, 22) any
+      (23, 27) any
+      (28, 36) any
+      (37, 43) any
+      (44, 47) any
+      (48, 58) any
+      (59, 71) any
+  (73, 501) nested_all_tx
+    (73, 501) nested_all_tx.complete_tx
+      (73, 104) tx_begin_line [36mBEGIN transaction 7812378112387[0m
+        (91, 104) tx_id
+      (105, 110) data_line [36mfoo 2[0m
+        (105, 108) term
+        (109, 110) value
+          (109, 110) num.uint
+      (111, 121) data_line [36mbar 44 x y[0m
+        (111, 114) term
+        (115, 117) value
+          (115, 117) num.uint
+        (118, 119) term
+        (120, 121) term
+      (122, 472) nested_all_tx.incomplete_tx
+        (122, 142) incomplete_tx_begin_line [36mBEGIN transaction 55[0m
+          (140, 142) incomplete_tx_id
+        (143, 153) data_line [36mbar 33 y y[0m
+          (143, 146) term
+          (147, 149) value
+            (147, 149) num.uint
+          (150, 151) term
+          (152, 153) term
+        (154, 441) nested_all_tx.complete_tx
+          (154, 176) tx_begin_line [36mBEGIN transaction 1213[0m
+            (172, 176) tx_id
+          (177, 184) data_line [36mfoo 392[0m
+            (177, 180) term
+            (181, 184) value
+              (181, 184) num.uint
+          (185, 195) data_line [36mbar 20 w f[0m
+            (185, 188) term
+            (189, 191) value
+              (189, 191) num.uint
+            (192, 193) term
+            (194, 195) term
+          (196, 421) nested_all_tx.incomplete_tx
+            (196, 219) incomplete_tx_begin_line [36mBEGIN transaction 15321[0m
+              (214, 219) incomplete_tx_id
+            (220, 226) data_line [36mfoo 54[0m
+              (220, 223) term
+              (224, 226) value
+                (224, 226) num.uint
+            (227, 237) data_line [36mbar 12 f f[0m
+              (227, 230) term
+              (231, 233) value
+                (231, 233) num.uint
+              (234, 235) term
+              (236, 237) term
+            (238, 421) nested_all_tx.incomplete_tx
+              (238, 262) incomplete_tx_begin_line [36mBEGIN transaction 132145[0m
+                (256, 262) incomplete_tx_id
+              (263, 269) data_line [36mfoo 95[0m
+                (263, 266) term
+                (267, 269) value
+                  (267, 269) num.uint
+              (270, 324) nested_all_tx.complete_tx
+                (270, 292) tx_begin_line [36mBEGIN transaction 5531[0m
+                  (288, 292) tx_id
+                (293, 303) data_line [36mbar 23 g s[0m
+                  (293, 296) term
+                  (297, 299) value
+                    (297, 299) num.uint
+                  (300, 301) term
+                  (302, 303) term
+                (304, 324) tx_end_line [36mEND transaction 5531[0m
+              (325, 335) data_line [36mbar 68 o s[0m
+                (325, 328) term
+                (329, 331) value
+                  (329, 331) num.uint
+                (332, 333) term
+                (334, 335) term
+              (336, 342) data_line [36mfoo 75[0m
+                (336, 339) term
+                (340, 342) value
+                  (340, 342) num.uint
+              (343, 420) nested_all_tx.complete_tx
+                (343, 365) tx_begin_line [36mBEGIN transaction 8141[0m
+                  (361, 365) tx_id
+                (366, 400) nested_all_tx.incomplete_tx
+                  (366, 388) incomplete_tx_begin_line [36mBEGIN transaction 5190[0m
+                    (384, 388) incomplete_tx_id
+                  (389, 399) data_line [36mbar 90 p a[0m
+                    (389, 392) term
+                    (393, 395) value
+                      (393, 395) num.uint
+                    (396, 397) term
+                    (398, 399) term
+                (400, 420) tx_end_line [36mEND transaction 8141[0m
+          (421, 441) tx_end_line [36mEND transaction 1213[0m
+        (442, 448) data_line [36mfoo 55[0m
+          (442, 445) term
+          (446, 448) value
+            (446, 448) num.uint
+        (449, 472) nested_all_tx.incomplete_tx
+          (449, 471) incomplete_tx_begin_line [36mBEGIN transaction 4151[0m
+            (467, 471) incomplete_tx_id
+      (472, 501) tx_end_line [36mEND transaction 7812378112387[0m
+  (502, 512) nested_all_tx
+    (502, 512) invalid_line [36mbar 12 a b[0m
+      (502, 505) any
+      (506, 508) any
+      (509, 510) any
+      (511, 512) any
+  (513, 531) nested_all_tx
+    (513, 531) invalid_line [36mEND transaction 55[0m
+      (513, 516) any
+      (517, 528) any
+      (529, 531) any
+  (532, 538) nested_all_tx
+    (532, 538) invalid_line [36mfoo 32[0m
+      (532, 535) any
+      (536, 538) any
+  (539, 559) nested_all_tx
+    (539, 559) invalid_line [36mEND transaction 5190[0m
+      (539, 542) any
+      (543, 554) any
+      (555, 559) any
