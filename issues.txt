@@ -4,6 +4,7 @@ Noticed Issues in rosie:
  - Parnentheses and bracket usage can be confusing for a new user
  - Managing whitespace can be confusing
  - Recursion is only possible in a grammar declaration
+ - Option to suppress captures in library patterns (eg. word.any)
 Possible Issues in rosie:
  - Unable to do more complicated matchings efficiently (eg long interleaved tranactions)
    - Might be fixable if we have data structures (should we even do this? might be out of scope)
