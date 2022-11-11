@@ -13,16 +13,34 @@
 /** The rate at which the input array grows when it fills up */
 #define ARRAY_REALLOC_FACTOR 2
 
+/** The minimum word count for a config file */
+#define MIN_CONFIG_SIZE 5
+
 /**
-    The struct returned when calling the read_delimited_input function, contains an array of char pointers
-    and it's size
+    A struct containing an array of char pointers and a size value coordinating to the number of char pointers
 */
 typedef struct {
   /** The array of character pointers, storing the data */
   char **data;
   /** The size of the data array, ie how many char pointers are being stored */
   int size;
-} DelimitedInput;
+} StringArray;
+
+/**
+    A struct containing the essential structure of a config file
+*/
+typedef struct {
+  /** The array of (all) output types for the program - used by generate_all_output*/
+  StringArray *all_output_types;
+  /** The array of invalid output types for the program - used by generate_invalid_output*/
+  StringArray *invalid_output_types;
+  /** The array of invalid subtypes for the program - used by generate_invalid_output*/
+  StringArray *invalid_subtypes;
+  /** The array of valid output types for the program - used by generate_valid_output */
+  StringArray *valid_output_types;
+  /** The array of valid subtypes for the program - used by generate_valid_output */
+  StringArray *valid_subtypes;
+} Config;
 
 /**
     Reads input from a file pointer and returns it as a (potentially very long) string
@@ -40,10 +58,29 @@ char *read_continous_input(FILE *fp);
     @param delimiter The character to deliminate input by.
     @return A dynamically array of character pointers (ie strings)
 */
-DelimitedInput *read_delimited_input(FILE *fp, char delimiter);
+StringArray *read_delimited_input(FILE *fp, char delimiter);
+
+/**
+    Gets input and, if it's the correct format, parses it as a Config struct
+    @param fp The file pointer to read from
+    @return A config struct containing StringArrays of every config subtype
+*/
+Config *getConfig(FILE *fp);
+
+/**
+    Helper funtion to free the memory stored in Config. Does not free the data, only the struct.
+    @param config The Config struct to free
+*/
+void free_only_config(Config *config);
+
+/**
+    Helper funtion to free the memory stored in Config. Frees both the data and struct.
+    @param config The Config struct to free
+*/
+void free_config_and_data(Config *config);
 
 /**
     Helper function to free the array of character pointers returned by read_delimited_input.
     @param input The memory to free
 */
-void free_delimited_input(DelimitedInput *input);
+void free_string_array(StringArray *input);

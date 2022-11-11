@@ -12,9 +12,9 @@
 */
 void usage() {
   printf("%s%s%s%s%s%s",
-         "Usage:  rosiejson <option> <json-file> <config-file>\n",
+         "Usage:  rosiejson <option> <config-file> <json-file>\n",
          "  Valid <option> values are one of these:\n",
-         "    -a  Prints out all Json Objects (DEFAULT)\n",
+         "    -a  Prints out all Json Objects\n",
          "    -i  Prints out all Invalid/Incomplete Json Objects\n",
          "    -v  Prints out all Valid Json Objects\n",
          "  Use -c to see valid <config-file> formats\n");
@@ -38,7 +38,6 @@ void config_msg() {
          "whitespace-separated strings. Ex:\n",
          "  submatch_type1 submatch_type2 submatch_type3\n",
          "  submatch_type4        submatch_type_5\n");
-  exit(EXIT_SUCCESS);
 }
 
 /**

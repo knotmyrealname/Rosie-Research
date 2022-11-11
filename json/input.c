@@ -6,6 +6,8 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
 #include "input.h"
 #include "utility.h"
@@ -49,7 +51,7 @@ char *read_continous_input(FILE *fp) {
     @param delimiter The character to deliminate input by.
     @return A dynamically array of character pointers (ie strings)
 */
-DelimitedInput *read_delimited_input(FILE *fp, char delimiter) {
+StringArray *read_delimited_input(FILE *fp, char delimiter) {
   // Checks to see if the file is empty
   char next = fgetc(fp);
   if ( next == EOF ) {
@@ -100,18 +102,130 @@ DelimitedInput *read_delimited_input(FILE *fp, char delimiter) {
   free(word);
   input[input_size] = '\0';
 
-  DelimitedInput *input_struct = (DelimitedInput *) malloc(sizeof(DelimitedInput));
+  StringArray *input_struct = (StringArray *) malloc(sizeof(StringArray));
   input_struct->data = input;
   input_struct->size = input_size;
 
   return input_struct;
 }
 
+StringArray *config_helper(char *config_name, char *next_config_name, StringArray *input, int index) {
+  StringArray *subconfig = (StringArray *) malloc(sizeof(StringArray));
+  int capacity = ARRAY_START_SIZE;
+  int size = 0;
+  char **data = (char **) malloc(capacity * sizeof(char *));
+
+  char *next_string = input->data[index + size];
+  size++;
+  if (strcmp(config_name, next_string) != 0) {
+    subconfig->size = -1;
+    return subconfig;
+  }
+  while (size + index < input->size && strcmp(next_config_name, next_string) != 0) {
+    data[size - 1] = input->data[index + size];
+    next_string = input->data[index + size];
+    size++;
+    if (size >= capacity) {
+      capacity = size * ARRAY_REALLOC_FACTOR;
+      data = (char **) realloc(input, capacity * sizeof(char *));
+    }
+  }
+  subconfig->size = size - 2;
+  subconfig->data = data;
+  return subconfig;
+}
+
+/**
+    Gets input and, if it's the correct format, parses it as a Config struct
+    @param fp The file pointer to read from
+    @return A config struct containing StringArrays of every config subtype
+*/
+Config *getConfig(FILE *fp) {
+  StringArray *input = read_delimited_input(fp, ' ');
+  Config *config = (Config *) malloc(sizeof(Config));
+  if (input->size < MIN_CONFIG_SIZE)
+    config_msg();
+
+  int index_a = 0;
+  StringArray *subconfig = config_helper("all:", "invalid:", input, index_a);
+  config->all_output_types = subconfig;
+
+
+  int index_b = index_a + subconfig->size + 1;
+  subconfig = config_helper("invalid:", "invalid_sub:", input, index_b);
+  config->invalid_output_types = subconfig;
+
+  int index_c = index_b +  subconfig->size + 1;
+  subconfig = config_helper("invalid_sub:", "valid:", input, index_c);
+  config->invalid_subtypes = subconfig;
+
+  int index_d = index_c +  subconfig->size + 1;
+  subconfig = config_helper("valid:", "valid_sub:", input, index_d);
+  config->valid_output_types = subconfig;
+
+  int index_e = index_d +  subconfig->size + 1;
+  subconfig = config_helper("valid_sub:", "", input, index_e);
+  config->valid_subtypes = subconfig;
+
+  if (config->all_output_types->size == -1 || config->invalid_output_types->size == -1 ||
+      config->invalid_subtypes->size == -1 || config->valid_output_types->size == -1 ||
+      config->valid_subtypes->size == -1) {
+    config_msg();
+    free_string_array(input);
+    free_only_config(config);
+    fclose(fp);
+    exit(EXIT_FAILURE);
+  }
+
+
+  // Only free the StringArray structure and config handlers, we want to keep the data
+  free(input->data[index_a]);
+  free(input->data[index_b]);
+  free(input->data[index_c]);
+  free(input->data[index_d]);
+  free(input->data[index_e]);
+  free(input->data);
+  free(input);
+
+  return config;
+}
+
+/**
+    Helper funtion to free the memory stored in Config. Does not free the data, only the struct.
+    @param config The Config struct to free
+*/
+void free_only_config(Config *config) {
+  free(config->all_output_types->data);
+    free(config->all_output_types);
+    free(config->invalid_output_types->data);
+    free(config->invalid_output_types);
+    free(config->invalid_subtypes->data);
+    free(config->invalid_subtypes);
+    free(config->valid_output_types->data);
+    free(config->valid_output_types);
+    free(config->valid_subtypes->data);
+    free(config->valid_subtypes);
+    free(config);
+}
+
+/**
+    Helper funtion to free the memory stored in Config. Frees both the data and struct.
+    @param config The Config struct to free
+*/
+void free_config_and_data(Config *config) {
+  free_string_array(config->all_output_types);
+  free_string_array(config->invalid_output_types);
+  free_string_array(config->invalid_subtypes);
+  free_string_array(config->valid_output_types);
+  free_string_array(config->valid_subtypes);
+  free(config);
+}
+
 /**
     Helper function to free the array of character pointers returned by read_delimited_input.
     @param input The memory to free
 */
-void free_delimited_input(DelimitedInput *input) {
+void free_string_array(StringArray *input) {
   for (int x = 0; x < input->size; x++) {
     free(input->data[x]);
   }

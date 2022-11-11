@@ -1,6 +1,0 @@
-end_line
-tx_begin_line
-tx_end_line
-data_line
-invalid_line
-incomplete_tx_begin_line

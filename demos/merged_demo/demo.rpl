@@ -12,7 +12,7 @@ local alias term = word.any
   -- A value is any valid signed number (float or int)
 local alias value = num.unsigned_number
   -- A transaction id can only be an unsigned integer
-local alias tx_id = num.uint
+local tx_id = num.uint
 
   -- A transaction begins with the phrase "BEGIN transaction", followed by a transaction id
 tx_begin_line = "BEGIN transaction" tx_id
