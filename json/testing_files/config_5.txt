@@ -15,10 +15,6 @@ data_line
 invalid_line
 
 valid:
-nested_all_tx.complete_tx
+2
 
 valid_sub:
-tx_begin_line
-tx_end_line
-data_line
-

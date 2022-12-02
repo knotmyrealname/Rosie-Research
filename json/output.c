@@ -1,27 +1,19 @@
 /**
-    @file rosiejson.c
+    @file output.c
     @author Daniel Dong
-    Reads in Rosie outputted json and converts it to a more readable format
-    Uses the json-c library for parsing
+    Contains output functions for all, invalid, and valid inputs
 */
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <json_object.h>
-#include <json_tokener.h>
 #include <string.h>
 #include <stdbool.h>
+#include <json_object.h>
+#include <json_tokener.h>
 
 #include "input.h"
 #include "utility.h"
-
-#define EXPECTED_ARGS_COUNT 4
-
-#define _A 1
-
-#define _I 2
-
-#define _V 3
+#include "output.h"
 
 /**
     Checks the json object type, and if it matches an object in output_types, the data inside the data object is printed
@@ -45,8 +37,9 @@ bool contains(StringArray *types, struct json_object *type) {
     Theoretically, this should work with any rosie json output.
     @param parsed_input The json input to parse
     @param depth The depth of the input being analyzed
+    @return A value based on the success of the function; true when successful and false when unsuccessful
 */
-void generate_all_output(struct json_object *parsed_input, StringArray *output_types, int depth) {
+bool generate_all_output(struct json_object *parsed_input, StringArray *output_types, int depth) {
   // Declare all of the necessary structs
   struct json_object *end;
   struct json_object *start;
@@ -58,7 +51,7 @@ void generate_all_output(struct json_object *parsed_input, StringArray *output_t
         json_object_object_get_ex(parsed_input, "s", &start) &&
         json_object_object_get_ex(parsed_input, "data", &data) &&
         json_object_object_get_ex(parsed_input, "type", &type)))
-    error("Invalid json data");
+    return false;
 
   // Generate the output
   char *spaces = spacing(depth);
@@ -66,8 +59,10 @@ void generate_all_output(struct json_object *parsed_input, StringArray *output_t
          json_object_get_int(end), json_object_get_string(type));
 
   // Check to see if the data should be printed out
-  if (contains(output_types, type))
+  if (contains(output_types, type)) {
     printf(" \x1b[36m%s\x1b[0m", json_object_get_string(data));
+    output_printed_count++;
+  }
   printf("\n");
 
   // Iterates through the inner json objects, recursively
@@ -75,11 +70,16 @@ void generate_all_output(struct json_object *parsed_input, StringArray *output_t
   if (json_object_object_get_ex(parsed_input, "subs", &subs)) {
     int length = json_object_array_length(subs);
     for (size_t x = 0; x < length; x++) {
+      // Runs generate_all_output on each sub object
       struct json_object *sub = json_object_array_get_idx(subs, x);
-      generate_all_output(sub, output_types, depth + 1);
+      if (!generate_all_output(sub, output_types, depth + 1)) {
+        free(spaces);
+        return false;
+      }
     }
   }
   free(spaces);
+  return true;
 }
 
 /**
@@ -89,8 +89,9 @@ void generate_all_output(struct json_object *parsed_input, StringArray *output_t
     have to come in a future update.
     @param parsed_input The json input to parse
     @param in_invalid_tx Whether the parent was an invalid transaction
+    @return A value based on the success of the function; true when successful and false when unsuccessful
 */
-void generate_invalid_output(struct json_object *parsed_input, StringArray *invalid_types,
+bool generate_invalid_output(struct json_object *parsed_input, StringArray *invalid_types,
                              StringArray *subtypes, bool in_invalid_tx) {
   // Declare all of the necessary structs
   struct json_object *data;
@@ -98,28 +99,28 @@ void generate_invalid_output(struct json_object *parsed_input, StringArray *inva
 
   // Gets all of the necessary data from the parsed input
   if (!(json_object_object_get_ex(parsed_input, "data", &data) &&
-        json_object_object_get_ex(parsed_input, "type", &type))) {
-    error("Invalid json data");
-  }
+        json_object_object_get_ex(parsed_input, "type", &type)))
+    return false;
 
+  // Determines whether to print output
   bool is_invalid_tx = contains(invalid_types, type);
   if (is_invalid_tx || (contains(subtypes, type) && in_invalid_tx)) {
     printf("%s\n", json_object_get_string(data));
+    output_printed_count++;
   }
 
+  // Recursively runs through all of the sub objects
   struct json_object *subs;
   if (json_object_object_get_ex(parsed_input, "subs", &subs)) {
     int length = json_object_array_length(subs);
     for (size_t x = 0; x < length; x++) {
+      // Runs generate_invalid_output on each sub object
       struct json_object *sub = json_object_array_get_idx(subs, x);
-      if (is_invalid_tx) {
-        generate_invalid_output(sub, invalid_types, subtypes, true);
-      }
-      else {
-        generate_invalid_output(sub, invalid_types, subtypes, false);
-      }
+      if (!generate_invalid_output(sub, invalid_types, subtypes, is_invalid_tx))
+        return false;
     }
   }
+  return true;
 }
 
 /**
@@ -129,42 +130,50 @@ void generate_invalid_output(struct json_object *parsed_input, StringArray *inva
     have to come in a future update.
     @param parsed_input The json input to parse
     @param in_invalid_tx Whether the parent was an invalid transaction
+    @return A value based on the success of the function; true when successful and false when unsuccessful
 */
-void generate_valid_output(struct json_object *parsed_input, StringArray *valid_types,
-                           StringArray *subtypes, bool in_valid_tx) {
+bool generate_valid_output(struct json_object *parsed_input, StringArray *valid_types, StringArray *subtypes) {
   // Declare all of the necessary structs
   struct json_object *data;
   struct json_object *type;
 
   // Gets all of the necessary data from the parsed input
   if (!(json_object_object_get_ex(parsed_input, "data", &data) &&
-        json_object_object_get_ex(parsed_input, "type", &type))) {
-    error("Invalid json data");
-  }
+        json_object_object_get_ex(parsed_input, "type", &type)))
+    return false;
 
-  bool is_valid_tx = contains(valid_types, type);
+  // Checks to see if the current transaction is valid
+  bool is_valid_type = contains(valid_types, type);
 
+  // Checks to see if there are subs
   struct json_object *subs;
   if (json_object_object_get_ex(parsed_input, "subs", &subs)) {
     int length = json_object_array_length(subs);
-    if (is_valid_tx) {
+    // Different behavior for when the current transaction is valid or not
+    if (is_valid_type) {
+      // Keeps track of the skipped objects (those that weren't a valid subtype)
       int skipped_capacity = ARRAY_START_SIZE;
       int skipped_count = 0;
       size_t *skipped = (size_t *) malloc(skipped_capacity * sizeof(size_t));
       for (size_t x = 0; x < length; x++) {
+        // Initializes json objects
         struct json_object *sub = json_object_array_get_idx(subs, x);
         struct json_object *sub_data;
         struct json_object *sub_type;
 
-        // Gets all of the necessary data from the parsed input
+        // Checks to ensure that the json objects are created properly
         if (!(json_object_object_get_ex(sub, "data", &sub_data) &&
               json_object_object_get_ex(sub, "type", &sub_type))) {
-           error("Invalid json data");
+           free(skipped);
+           return false;
         }
-        if (contains(subtypes, type)) {
+        // If the current object is a valid subtype, print it out
+        if (contains(subtypes, sub_type)) {
           printf("%s\n", json_object_get_string(sub_data));
+          output_printed_count++;
         }
         else {
+          // The current object is not a valid subtype, add it to the list of skipped objects
           skipped[skipped_count++] = x;
           if (skipped_count >= skipped_capacity) {
             skipped_capacity = skipped_count * ARRAY_REALLOC_FACTOR;
@@ -172,90 +181,27 @@ void generate_valid_output(struct json_object *parsed_input, StringArray *valid_
           }
         }
       }
-      printf("\n\n\n\n");
+      printf("\n");
+      // Recursively run this function on the skipped objects
       for (int x = 0; x < skipped_count; x++) {
         struct json_object *sub = json_object_array_get_idx(subs, skipped[x]);
-        generate_invalid_output(sub, valid_types, subtypes, false);
+        if (!generate_valid_output(sub, valid_types, subtypes)) {
+          free(skipped);
+          return false;
+        }
       }
+      free(skipped);
     }
     else {
+      // Is not a valid type, just recursively run function on the sub objects
       for (size_t x = 0; x < length; x++) {
         struct json_object *sub = json_object_array_get_idx(subs, x);
-        generate_invalid_output(sub, valid_types, subtypes, false);
+        if (!generate_valid_output(sub, valid_types, subtypes))
+          return false;
       }
-   }
+    }
   }
-
+  return true;
 }
 
-/**
-    The main method of rosiejson
-    @param argc The length of the argument array
-    @param argv The array of command line arguments
-    @return The exit status of the program
-*/
-int main(int argc, char *argv[]) {
-  if (argc != EXPECTED_ARGS_COUNT)
-    usage();
 
-  int state = 0;
-
-  if (strcmp("-a", argv[1]) == 0) {
-    state = _A;
-  }
-  else if (strcmp("-i", argv[1]) == 0) {
-    state = _I;
-  }
-  else if (strcmp("-v", argv[1]) == 0) {
-    state = _V;
-  }
-  else if (strcmp("-c", argv[1]) == 0) {
-    config_msg();
-    exit(EXIT_SUCCESS);
-  }
-  else {
-    usage();
-  }
-
-  // Opens json file and reads in input
-  FILE *json_fp;
-  if ((json_fp = fopen(argv[ 2 ], "r")) == NULL) {
-    error(strcat("Can't open file: ", argv[ 1 ]));
-  }
-  char *json_input = read_continous_input(json_fp);
-  fclose(json_fp);
-
-  FILE *types_fp;
-  if ((types_fp = fopen(argv[ 3 ], "r")) == NULL) {
-    error(strcat("Can't open file: ", argv[ 2 ]));
-  }
-  Config *config  = getConfig(types_fp);
-
-  // Generate the json objects and print out formatted data
-  struct json_object *parsed_input = json_tokener_parse(json_input);
-  if (parsed_input == NULL) {
-    error("Unable to parse input for json content");
-  }
-
-  switch (state) {
-    case _A:
-      generate_all_output(parsed_input, config->all_output_types,  0);
-      break;
-    case _I:
-      generate_invalid_output(parsed_input, config->invalid_output_types, config->invalid_subtypes, false);
-      break;
-    case _V:
-      generate_valid_output(parsed_input, config->valid_output_types, config->valid_subtypes, false);
-      break;
-    default:
-      usage();
-  }
-
-  // Free the memory
-  while(json_object_put(parsed_input) != 1) {}
-  free(json_input);
-  free_config_and_data(config);
-  fclose(types_fp);
-
-  return(EXIT_SUCCESS);
-}

@@ -3,7 +3,6 @@
     @author Daniel Dong
     Parses FILE pointers into easily readable character arrays
 */
-
 #include <stdio.h>
 
 
@@ -51,12 +50,12 @@ typedef struct {
 char *read_continous_input(FILE *fp);
 
 /**
-    Reads input from a file pointer and returns it as an array of character pointers, with a '\0'
-    to mark the end. The input is deliminated by the specified delimiter, as well as a default '\n'.
+    Reads input from a file pointer and returns it as a StringArray, with a '\0'. The input is deliminated by
+    the specified delimiter, as well as a default '\n'.
     The user can free the returned memory by calling the provided free_delimited_input function on the object.
     @param fp The file pointer to read from
     @param delimiter The character to deliminate input by.
-    @return A dynamically array of character pointers (ie strings)
+    @return A StringArray struct containing an array of char pointers (to strings) and the number of strings read
 */
 StringArray *read_delimited_input(FILE *fp, char delimiter);
 

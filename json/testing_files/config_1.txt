@@ -1,0 +1,21 @@
+all:
+end_line
+tx_begin_line
+tx_end_line
+data_line
+invalid_line
+incomplete_tx_begin_line
+
+invalid:
+incomplete_tx_begin_line
+invalid_line
+
+invalid_sub:
+data_line
+invalid_line
+
+valid:
+nested_all_tx.complete_tx
+
+valid_sub:
+data_line tx_begin_line tx_end_line

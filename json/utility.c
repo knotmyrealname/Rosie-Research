@@ -31,13 +31,19 @@ void error(char const *msg) {
 
 /**
     Prints the Config file format message
+    @param exit_status The exit status for the config message
 */
-void config_msg() {
-  printf("%s%s%s%s",
-         "The configuration file expects a list of submatch types that should output data as a list of",
-         "whitespace-separated strings. Ex:\n",
-         "  submatch_type1 submatch_type2 submatch_type3\n",
-         "  submatch_type4        submatch_type_5\n");
+void config_msg(int exit_status) {
+  printf("%s%s%s%s%s%s%s%s",
+         "The configuration file expects a list of match types, each with submatch types delimited by whitespace-separated ",
+         "strings. Extraneous whitespace (spaces and new-lines) is ignored. An example of a valid config file is:\n\n",
+         "  all:\n  end_line\n  invalid_line\n  data_line\n  tx_begin_line\n  tx_end_line\n  incomplete_tx_begin_line\n\n",
+         "  invalid:\n  incomplete_tx_begin_line invalid_line\n\n",
+         "  invalid_sub: data_line invalid_line\n",
+         "  valid: nested_all_tx.complete_tx valid_sub: data_line tx_begin_line tx_end_line\n\n",
+         "- Note that the data within cannot have the same name as any of the config-type labels (e.g. 'all:')\n",
+         "- It is ill-advised to have duplicate data-labels between valid: and valid_sub: due to the nature of -v output\n");
+  exit(exit_status);
 }
 
 /**

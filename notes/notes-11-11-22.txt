@@ -1,0 +1,24 @@
+Department requires written report following a guideline (4-5 pages)
+
+We changed direction partway through, but still keep the papers we looked at for continuations
+
+Rosie is based on parsing expression grammars, of which has some known limitations, so we began the semester
+looking at new features that could be added to rpl. We specifically looked at features inspired by continuations.
+[]
+
+Before we could test out new ideas, we needed to develop a sample application for the rosie parser. We spent the
+remainder of the semester developing a sample problem and a solution in the form of code (rpl and c). What we
+learned from solving this sample problem are that there are usability issues with rpl that should be addressed
+in a "Rosie 2.0". We've determined a sample application and solution and allow further research to test out ideas
+for new rpl features. This allows for future research into continuations or to take a different direction.
+tldr:
+  - identified usability issues that can be addressed
+  - defined a sample problem and solution which make up the base for future experiments
+
+
+- Include a user guide for the rosie json parser in appendix
+
+- TODO:
+  - elaborate on issues.txt
+  - iron out rosie json parser
+  - create user guide for rosie json parser

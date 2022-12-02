@@ -16,8 +16,9 @@ void error(char const *msg);
 
 /**
     Prints the Config file format message
+    @param exit_status The exit status for the config message
 */
-void config_msg();
+void config_msg(int exit_status);
 
 /**
     Generates the spacing for the output, based on the depth of the data

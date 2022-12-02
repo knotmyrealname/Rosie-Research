@@ -44,12 +44,12 @@ char *read_continous_input(FILE *fp) {
 }
 
 /**
-    Reads input from a file pointer and returns it as an array of character pointers, with a '\0'
-    to mark the end. The input is deliminated by the specified delimiter, as well as a default '\n'.
+    Reads input from a file pointer and returns it as a StringArray, with a '\0'. The input is deliminated by
+    the specified delimiter, as well as a default '\n'.
     The user can free the returned memory by calling the provided free_delimited_input function on the object.
     @param fp The file pointer to read from
     @param delimiter The character to deliminate input by.
-    @return A dynamically array of character pointers (ie strings)
+    @return A StringArray struct containing an array of char pointers (to strings) and the number of strings read
 */
 StringArray *read_delimited_input(FILE *fp, char delimiter) {
   // Checks to see if the file is empty
@@ -67,14 +67,14 @@ StringArray *read_delimited_input(FILE *fp, char delimiter) {
   int input_capacity = ARRAY_START_SIZE;
   int word_size = 0;
   int word_capacity = ARRAY_START_SIZE;
-  char prev = '\n';
+  bool after_delim = true;
 
   // Iterate until the end of input
   while (next != EOF) {
     if ((next == delimiter || next == '\n')) {
       // If we get a duplicate delimiter match, we ignore it
       // May be undesireable for certain forms of input, but it's better for our use case
-      if (prev != next) {
+      if (!after_delim) {
         // Finished matching an input phrase, add it to the main array and reset the word array
         word[word_size] = '\0';
         input[input_size++] = word;
@@ -86,6 +86,7 @@ StringArray *read_delimited_input(FILE *fp, char delimiter) {
           input_capacity = input_size * ARRAY_REALLOC_FACTOR;
           input = (char **) realloc(input, input_capacity * sizeof(char*));
         }
+        after_delim = true;
       }
     }
     else {
@@ -95,13 +96,15 @@ StringArray *read_delimited_input(FILE *fp, char delimiter) {
         word_capacity = word_size * ARRAY_REALLOC_FACTOR;
         word = (char *) realloc(word, word_capacity * sizeof(char));
       }
+      after_delim=false;
     }
-    prev = next;
     next = fgetc(fp);
   }
+  // Free input and clean
   free(word);
   input[input_size] = '\0';
 
+  // Creates the StringArray data structure for returning
   StringArray *input_struct = (StringArray *) malloc(sizeof(StringArray));
   input_struct->data = input;
   input_struct->size = input_size;
@@ -109,28 +112,44 @@ StringArray *read_delimited_input(FILE *fp, char delimiter) {
   return input_struct;
 }
 
+/**
+    Reads a subsection of the input, from the beginning of config_name to next_config_name. This data (exclusive) is read
+    into a StringArray and then returned.
+    A string of config_name will be expected at input->data[index];
+    @param config_name The config name of the current config entry (i.e. the title)
+    @param next_config_name The config name of the next expected config entry (if last config, just pass a blank string)
+    @param input The StringArray to read input from.
+    @param index The index to start parsing the input StringArray
+    @param A StringArray containing the subsection of data entries for the current config
+*/
 StringArray *config_helper(char *config_name, char *next_config_name, StringArray *input, int index) {
+  // Initialize variables
   StringArray *subconfig = (StringArray *) malloc(sizeof(StringArray));
   int capacity = ARRAY_START_SIZE;
   int size = 0;
   char **data = (char **) malloc(capacity * sizeof(char *));
 
-  char *next_string = input->data[index + size];
-  size++;
-  if (strcmp(config_name, next_string) != 0) {
+  // Checks the first string to make sure it matches config_name and that there is more input to be read
+  char *next_string = input->data[index];
+  if (index >= input->size || strcmp(config_name, next_string) != 0) {
     subconfig->size = -1;
+    subconfig->data = data;
     return subconfig;
   }
+  // Loops through the input until the next_config_name is found
   while (size + index < input->size && strcmp(next_config_name, next_string) != 0) {
-    data[size - 1] = input->data[index + size];
-    next_string = input->data[index + size];
+    // Adds the string to the data (since we know it's not the next config entry)
+    data[size] = input->data[index + size + 1];
+    next_string = input->data[index + size + 1];
     size++;
+    // Ensures there is room in the data array for more entries
     if (size >= capacity) {
       capacity = size * ARRAY_REALLOC_FACTOR;
       data = (char **) realloc(input, capacity * sizeof(char *));
     }
   }
-  subconfig->size = size - 2;
+  // Stores data into the subconfig StringArray for returning
+  subconfig->size = size - 1;
   subconfig->data = data;
   return subconfig;
 }
@@ -138,43 +157,53 @@ StringArray *config_helper(char *config_name, char *next_config_name, StringArra
 /**
     Gets input and, if it's the correct format, parses it as a Config struct
     @param fp The file pointer to read from
-    @return A config struct containing StringArrays of every config subtype
+    @return A config struct containing StringArrays of every config subtype. In the case of an error, NULL is returned
 */
 Config *getConfig(FILE *fp) {
+  // Reads in input and initializes variables
   StringArray *input = read_delimited_input(fp, ' ');
   Config *config = (Config *) malloc(sizeof(Config));
-  if (input->size < MIN_CONFIG_SIZE)
-    config_msg();
 
+  // Checks to ensure there is more data than config names
+  if (input->size < MIN_CONFIG_SIZE) {
+    free(config);
+    free_string_array(input);
+    return NULL;
+  }
+
+  // Parses input for the "all:" subconfig
   int index_a = 0;
   StringArray *subconfig = config_helper("all:", "invalid:", input, index_a);
   config->all_output_types = subconfig;
 
-
+  // Parses input for the "invalid:" subconfig
   int index_b = index_a + subconfig->size + 1;
   subconfig = config_helper("invalid:", "invalid_sub:", input, index_b);
   config->invalid_output_types = subconfig;
 
+  // Parses input for the "invalid_sub:" subconfig
   int index_c = index_b +  subconfig->size + 1;
   subconfig = config_helper("invalid_sub:", "valid:", input, index_c);
   config->invalid_subtypes = subconfig;
 
+  // Parses input for the "valid:" subconfig
   int index_d = index_c +  subconfig->size + 1;
   subconfig = config_helper("valid:", "valid_sub:", input, index_d);
   config->valid_output_types = subconfig;
 
+  // Parses input for the "valid_sub:" subconfig
   int index_e = index_d +  subconfig->size + 1;
   subconfig = config_helper("valid_sub:", "", input, index_e);
   config->valid_subtypes = subconfig;
 
+  // Checks to see if there are any errors
   if (config->all_output_types->size == -1 || config->invalid_output_types->size == -1 ||
       config->invalid_subtypes->size == -1 || config->valid_output_types->size == -1 ||
       config->valid_subtypes->size == -1) {
-    config_msg();
+    // If there are errors, print config message and free initialized variables
     free_string_array(input);
     free_only_config(config);
-    fclose(fp);
-    exit(EXIT_FAILURE);
+    return NULL;
   }
 
 
@@ -196,16 +225,16 @@ Config *getConfig(FILE *fp) {
 */
 void free_only_config(Config *config) {
   free(config->all_output_types->data);
-    free(config->all_output_types);
-    free(config->invalid_output_types->data);
-    free(config->invalid_output_types);
-    free(config->invalid_subtypes->data);
-    free(config->invalid_subtypes);
-    free(config->valid_output_types->data);
-    free(config->valid_output_types);
-    free(config->valid_subtypes->data);
-    free(config->valid_subtypes);
-    free(config);
+  free(config->all_output_types);
+  free(config->invalid_output_types->data);
+  free(config->invalid_output_types);
+  free(config->invalid_subtypes->data);
+  free(config->invalid_subtypes);
+  free(config->valid_output_types->data);
+  free(config->valid_output_types);
+  free(config->valid_subtypes->data);
+  free(config->valid_subtypes);
+  free(config);
 }
 
 /**
