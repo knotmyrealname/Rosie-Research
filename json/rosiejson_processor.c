@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
   }
 
   // Now there has to be enough arguments for there to be a data and config file as data processing starts
-  if (argc != DATA_FILE + 1)
+  if (argc != JSON_FILE + 1)
     usage();
 
   // Gets the config file, erroring if it was unable to be read
