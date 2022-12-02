@@ -1,4 +1,0 @@
-(449, 472) nested_all_tx.incomplete_tx
-  (449, 471) incomplete_tx_begin_line
-    (467, 471) incomplete_tx_id
-  

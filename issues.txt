@@ -1,10 +1,83 @@
 Noticed Issues in rosie:
- - Unable to color inner grammar variables in output
- - Unable to use declared grammars in other grammars
- - Parnentheses and bracket usage can be confusing for a new user
- - Managing whitespace can be confusing
- - Recursion is only possible in a grammar declaration
- - Option to suppress captures in library patterns (eg. word.any)
-Possible Issues in rosie:
+___________________________________________________________________________________________________________________
+
+-- Unable to color inner grammar variables in output
+
+For example, when you have
+
+grammar
+  complete_tx = ( tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)* tx_end_line )
+  incomplete_tx = incomplete_tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)*
+in
+  nested_all_tx = complete_tx / incomplete_tx / invalid_line
+end
+
+you cannot color complete_tx or incomplete_tx, only the components (such as data_line, invalid_line, tx_end_line),
+of which are declared outside the grammar construct. 
+___________________________________________________________________________________________________________________
+
+-- Unable to use declared grammars in other grammars
+
+It is only possible access the main grammar variable (e.g. nested_all_tx) outside of it's grammar, in the format:
+
+grammar
+  complete_tx = ( tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)* tx_end_line )
+  incomplete_tx = incomplete_tx_begin_line (data_line)* (complete_tx / incomplete_tx / data_line)* (data_line)*
+in
+  nested_all_tx = complete_tx / incomplete_tx / invalid_line
+end
+tx = nested_all_tx
+
+It is not possible to further utilize nested_all_tx inside another grammar, or to utilize complete_tx or
+incomplete_tx in any way outside of the grammar-end block.
+
+___________________________________________________________________________________________________________________
+
+-- Parentheses and bracket usage can be confusing for a new user
+
+This issue was made clear to me by Dr. Jennings; The current parentheses and curly bracket usage is from
+an earlier iteration of rosie, where they made sense. In this current iteration, the parentheses indicate
+tokenized patterns, while the curly brackets indicate untokenized patterns. For a new user, it can be difficult
+to determine how to use each, and further deliberation would be needed to determine what the best approach
+should be.
+
+___________________________________________________________________________________________________________________
+
+-- Managing whitespace can be confusing
+
+Currently, Rosie eats up all whitespace between tokenized expressions, meaning that patterns that rely on
+whitespace can be confusing to write, without an in depth knowledge of the language. It could be possible for
+such items to be handled in a way that would be easier for new users to figure out, as I've had issues figuring
+out how to write certain patterns as well. This code is what is necessary to match a data line (simply a line
+with at least one term/value, that does not begin with a "BEGIN" or "END". It can be easier to represent this,
+and making these changes would likely make Rosie easier for new users to pick up.
+
+data_line = { <"\n" !("BEGIN" / "END") { !>"\n" [ ]* {term / value} }+ }
+
+___________________________________________________________________________________________________________________
+
+-- Recursion is only possible in a grammar declaration
+
+Right now, recursion (i.e. having a pattern have nested versions of itself within itself) is only possible
+within grammar blocks. If changes were to be made to rosie to enable recursion outside of these blocks, it
+is possible to make more powerful pattern-matching programs. This change would also mitigate the issue of
+locality for grammar variables, as recursion (one of the main purposes of grammars), can now be done outside
+of these blocks. Essentially, the first 2 issues would likely be solved if recursions were possible outside
+of grammar blocks.
+
+___________________________________________________________________________________________________________________
+
+-- Option to suppress captures in library patterns (eg. word.any)
+
+Currently, if a user wants to use library patterns in their rosie code, there are no ways to suppress their
+captures. This is especially relevant in the use of rosie json to further parse objects, in the case that Rosie
+is used to process input, to make processing easier for other programs down the line (demonstrated partly in
+the rosiejson_processor.c implementation). There will be potential junk in the json output, wasting both storage
+and processing resources on the client side, given that the user only wants the main patterns and subpatterns
+to be output (and not the building blocks, such as words and numbers).
+
+___________________________________________________________________________________________________________________
+
+Possible Issues in rosie (unsure):
  - Unable to do more complicated matchings efficiently (eg long interleaved tranactions)
    - Might be fixable if we have data structures (should we even do this? might be out of scope)
