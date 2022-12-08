@@ -9,7 +9,7 @@ echo "Generating Demo Files..."
 echo "Text file (t), Standard Output (s), JSON (j), or Clean (c):" 
 read output_format
 
-echo "Input file (if Clean, just press {Enter}:"
+echo "Input file (if Clean, just press {Enter}):"
 read input_file
 
 colors="end_line=blue:tx_begin_line=red:tx_end_line=blue:data_line=green:invalid_line=yellow:incomplete_tx_begin_line=cyan"
