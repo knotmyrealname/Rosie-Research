@@ -15,13 +15,13 @@ local alias value = num.unsigned_number
 local tx_id = num.uint
 
   -- A transaction begins with the phrase "BEGIN transaction", followed by a transaction id
-tx_begin_line = "BEGIN transaction" tx_id
+tx_begin_line = <"\n" "BEGIN transaction" tx_id
   -- A data line cannnot begin with a "BEGIN" or "END", and must not have any newline 
   -- characters. It must also have at least one term or value. Otherwise, there are no limits 
   -- to what a data line can have.
 data_line = { <"\n" !("BEGIN" / "END") { !>"\n" [ ]* {term / value} }+ }
   -- A transaction ends with the phrase "END transaction", followed by a transaction id
-end_line = "END transaction" tx_id
+end_line = <"\n" "END transaction" tx_id
 
 -------------------------------------------------------------------------------------------------------
 -- DEMO 1 : Matches Parts of a Transaction: Standard Pattern Matching

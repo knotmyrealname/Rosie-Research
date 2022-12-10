@@ -8,7 +8,7 @@
 #include <json_object.h>
 #include <json_tokener.h>
 
-// The number of times output related to the config file was printed
+/** The number of times output related to the config file was printed */
 extern int output_printed_count;
 
 /**

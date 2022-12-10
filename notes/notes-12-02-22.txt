@@ -1,0 +1,48 @@
+Writing final report
+
+ - Abstract
+Include original proposal
+ > We decided that the most important way to make progress is to make a concrete example of what we can work on
+
+ - Problem Statement - big picture, gets more specific
+Regex has all sorts of problems. PEGs can fix some of these, and provide additional powers. We demonstrate how a 
+PEG solution can be more powerful than a regex solution, while pointing out limitation/usability issues with the
+PEG based approach. (state what we did) - We created a dataset with sequential, nested, interleaved, and invalid
+transactions, wrote RPL code to process dataset, and wrote a separate program to consume json output from Rosie
+parsing.
+ > should say that the problem evolved from continuations and 
+
+ - Literature Summary
+A few sentences on each source
+
+ - Methodology
+We needed a dataset with various features, so we made that up.
+We created RPL to process it
+We created a json processing program to process RPL processing 
+
+ - Results
+We created a dataset with various types of transactions (that can be used in future research)
+We created rpl code for processing these datasets
+We processed Rosie output to demonstrate that the structure created by the Rosie processor reflects the structure
+of the data.
+While writing the RPL code, we encountered usability issues that can be improved in future versions of Rosie
+
+ - Citations
+Pick a few articles cited at the end of https://jamiejennings.com/posts/2021-09-07-dont-look-back-1/
+ > used to make the point that regex is frequently used and a source of bugs
+Bryan Ford 2004 — PEG paper
+ > defines PEG grammars - root of all the work on Rosie and other PEG based grammar systems
+https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/
+ > Validating is a source of security bugs. By parsing it into a data structure and loading it into a program,
+   you don't have to reparse or revalidate any of the data.
+Continuations papers
+
+ - Reflection
+Step back from technical part and talk about my experiences (how project evolved, scope changes, etc).
+Describe what the experience was like.
+Started with raw data and ended with processed data.
+
+
+Add in text from previous notes and meetings
+
+Due the 12th, maybe? Will be ideal to finish on the 9th
